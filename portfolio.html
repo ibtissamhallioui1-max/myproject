@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Portfolio - Nova Tech Industries</title>
+
+  <!-- Favicons -->
+  <link href="assets/img/nti.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="portfolio-page">
+
+  <header id="header" class="header d-flex align-items-center light-background sticky-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html" class="active">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <div class="header-social-links">
+        <a href="#" class="x"><i class="bi bi-twitter-x"></i></a>
+        <a href="https://web.facebook.com/emploi.ma?_rdc=1&_rdr#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.instagram.com/nova_tech_industries/" class="instagram" target="_blank"><i
+            class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/company/emploi-ma/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section id="portfolio" class="portfolio section">
+
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Portfolio</h2>
+        <p>Our company projects</p>
+      </div>
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+
+        <!-- Portfolio Items Container -->
+        <div class="row gy-4 isotope-container" id="portfolio-items" data-aos="fade-up" data-aos-delay="300">
+          <!-- Items will be added dynamically -->
+        </div>
+
+        <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
+          <a href="#portfolio" class="btn btn-primary">View All Case Studies</a>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href="https://web.facebook.com/emploi.ma?_rdc=1&_rdr#"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.instagram.com/nova_tech_industries/" target="_blank"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/company/emploi-ma/"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Script to add portfolio items dynamically -->
+  <script>
+    fetch('/api/portfolio')
+      .then(response => response.json())
+      .then(portfolioData => {
+        const container = document.getElementById("portfolio-items");
+        portfolioData.forEach(item => {
+          const div = document.createElement("div");
+          div.className = `col-lg-4 col-md-6 portfolio-item isotope-item ${item.category}`;
+          div.innerHTML = `
+  <div class="portfolio-card">
+    <div class="portfolio-img">
+      <img src="${item.img}" alt="${item.title}" class="img-fluid">
+      <div class="portfolio-overlay">
+        <a href="${item.img}" class="glightbox portfolio-lightbox"><i class="bi bi-plus"></i></a>
+        <a href="https://wa.me/212526013226?text=السلام عليكم، مهتم بالمنتج ${encodeURIComponent(item.title)}" 
+           target="_blank" 
+           class="portfolio-details-link">
+           <i class="bi bi-link"></i>
+        </a>
+      </div>
+    </div>
+    <div class="portfolio-info">
+      <h4>${item.title}</h4>
+      <p>$${item.prix ? item.prix.toFixed(2) : (item.prx || item.tags || []).join(", ")}</p>
+    </div>
+  </div>
+`;
+
+          container.appendChild(div);
+        });
+      })
+      .catch(error => console.error('Error loading portfolio data:', error));
+
+
+  </script>
+
+</body>
+
+</html>
