@@ -63,7 +63,7 @@ func main() {
 			}
 			defer file.Close()
 
-			dst, err := os.Create("../assets/img/portfolio/" + handler.Filename)
+			dst, err := os.Create("./assets/img/portfolio/" + handler.Filename)
 			if err != nil {
 				http.Error(w, "Error saving file", http.StatusInternalServerError)
 				return
@@ -77,7 +77,7 @@ func main() {
 				Title:    title,
 				Category: category,
 				Prix:     prix,
-				Img:      "/assets/img/portfolio/" + handler.Filename, 
+				Img:      "./assets/img/portfolio/" + handler.Filename, 
 			}
 			if item.Title == "" || item.Img == "" {
 				http.Error(w, "missing title or img", http.StatusBadRequest)
